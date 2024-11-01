@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Question {
+    char question[256];
+    char options[4][100];
+    char answer;
+};
+
+void displayQuestion(struct Question q) {
+    printf("%s\n", q.question);
+    for (int i = 0; i < 4; i++) {
+        printf("%c. %s\n", 'A' + i, q.options[i]);
+    }
+}
+
+int main() {
+    struct Question quiz[] = {
+        {"What is the output of an OR gate if one input is 1 and the other is 0?",
+         {"0", "1", "-1", "2"}, 'B'},
+        {"Zener diodes are commonly used in which type of circuits?",
+         {"Amplifier circuits", "Logic circuits", "Voltage regulator circuits", "Oscillation circuits"}, 'C'},
+        {"Which type of current is used in household electrical outlets?",
+         {"Direct Current", "Alternating Current", "Variable Current", "Pulsating Current"}, 'B'},
+        {"What happens when a Wheatstone Bridge is balanced?",
+         {"Voltage across the bridge is zero", "Current through the galvanometer is zero", "Resistance of all arms becomes equal", "Voltage drop across the resistors is maximum"}, 'B'},
+        {"What is the equivalent resistance of the circuit, if 10-ohm resistor and 20-ohm resistor are connected in parallel?",
+         {"3.33 Ohms", "6.67 Ohms", "9.33 Ohms", "10 Ohms"}, 'B'}
+    };
+
+    int score = 0;
+    char userAnswer;
+    int totalQuestions = sizeof(quiz) / sizeof(quiz[0]);
+
+    printf("Welcome to the Quiz Game!\n");
+
+    for (int i = 0; i < totalQuestions; i++) {
+        displayQuestion(quiz[i]);
+        printf("Your answer (A, B, C, or D): ");
+        scanf(" %c", &userAnswer);
+        userAnswer = toupper(userAnswer); // Convert to uppercase for comparison
+
+        if (userAnswer == quiz[i].answer) {
+            printf("Correct!\n\n");
+            score++;
+        } else {
+            printf("Incorrect! The correct answer was %c.\n\n", quiz[i].answer);
+        }
+    }
+
+    printf("Quiz completed! Your total score is %d out of %d.\n", score, totalQuestions);
+    return 0;
+}
